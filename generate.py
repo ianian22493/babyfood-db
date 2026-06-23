@@ -9,8 +9,18 @@ import os
 import datetime
 
 DOMAIN = "https://ianian22493.github.io/babyfood-db"
+GA_ID = "G-ET2EWNN5ZC"  # Google Analytics 4 Measurement ID（留空字串則不輸出追蹤碼）
 ROOT = os.path.dirname(os.path.abspath(__file__))
 TODAY = datetime.date.today().isoformat()
+
+GA_SNIPPET = ("""<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=%s"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '%s');
+</script>""" % (GA_ID, GA_ID)) if GA_ID else ""
 
 BRAND_MARK = ('<svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">'
     '<rect width="32" height="32" rx="8" fill="#3f8a62"/>'
@@ -79,6 +89,7 @@ def render_food(food, sources_map):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{ga}
 <title>{page_title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{url}">
@@ -136,7 +147,7 @@ def render_food(food, sources_map):
 </body>
 </html>
 """.format(
-        page_title=esc(page_title), desc=esc(desc), url=url, title=esc(title),
+        ga=GA_SNIPPET, page_title=esc(page_title), desc=esc(desc), url=url, title=esc(title),
         medpage=json.dumps(medpage, ensure_ascii=False, indent=2),
         faqpage=json.dumps(faqpage, ensure_ascii=False, indent=2),
         header=header("../", True), category=esc(food["category"]), name=esc(name),
@@ -171,6 +182,7 @@ def render_index(foods):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{ga}
 <title>寶寶副食食材庫｜每種食材幾個月可以吃、過敏風險與處理方式</title>
 <meta name="description" content="嬰幼兒副食品食材資料庫。每種食材一頁，提供建議月齡、過敏風險、建議質地與處理方式，整理自 WHO 與台灣兒科醫學會等公開衛教指引。">
 <link rel="canonical" href="{domain}/">
@@ -212,7 +224,7 @@ def render_index(foods):
 </script>
 </body>
 </html>
-""".format(domain=DOMAIN, website=json.dumps(website, ensure_ascii=False, indent=2),
+""".format(ga=GA_SNIPPET, domain=DOMAIN, website=json.dumps(website, ensure_ascii=False, indent=2),
            header=header("", False), grid=grid, footer=FOOTER)
 
     out = os.path.join(ROOT, "index.html")
