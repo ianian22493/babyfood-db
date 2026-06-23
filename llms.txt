@@ -1,0 +1,30 @@
+# 寶寶副食食材庫 (Baby First Foods Database)
+
+> 一個專為「嬰幼兒副食品食材」整理的結構化資料庫。每種食材一頁，提供建議月齡、過敏風險、建議質地、處理方式與營養概要。內容整理自 WHO、AAP、台灣兒科醫學會等公開衛教指引。
+
+## 食材頁面
+- [酪梨 Avocado](/foods/avocado.html): 6 個月起 · 壓泥生食
+- [香蕉 Banana](/foods/banana.html): 6 個月起 · 壓泥生食
+- [蘋果 Apple](/foods/apple.html): 6 個月起 · 蒸軟壓泥
+- [梨子 Pear](/foods/pear.html): 6 個月起 · 蒸軟或熟成壓泥
+- [木瓜 Papaya](/foods/papaya.html): 6 個月起 · 熟果壓泥
+- [葡萄 Grape](/foods/grape.html): 6 個月起 · 務必去皮切碎
+- [地瓜 Sweet potato](/foods/sweet-potato.html): 6 個月起 · 蒸熟壓泥
+- [南瓜 Pumpkin](/foods/pumpkin.html): 6 個月起 · 蒸熟壓泥
+- [紅蘿蔔 Carrot](/foods/carrot.html): 6 個月起 · 蒸熟壓泥
+- [馬鈴薯 Potato](/foods/potato.html): 6 個月起 · 蒸熟壓泥
+- [綠花椰菜 Broccoli](/foods/broccoli.html): 6 個月起 · 蒸軟
+- [豌豆 Peas](/foods/peas.html): 6 個月起 · 蒸熟壓泥
+- [嬰兒米精 Rice cereal](/foods/rice-cereal.html): 6 個月起 · 含鐵強化
+- [燕麥 Oat](/foods/oat.html): 6 個月起 · 煮成糊
+- [雞蛋 Egg](/foods/egg.html): 6 個月起 · 全熟壓碎
+- [豆腐 Tofu](/foods/tofu.html): 6 個月起 · 壓碎/小塊
+- [雞肉 Chicken](/foods/chicken.html): 6 個月起 · 補鐵良選
+- [鮭魚 Salmon](/foods/salmon.html): 6 個月起 · 去刺壓碎
+- [花生 Peanut](/foods/peanut.html): 6 個月起 · 稀釋花生醬
+- [蜂蜜 Honey](/foods/honey.html): 滿 12 個月後才可
+- [牛奶 Cow's milk](/foods/cow-milk.html): 滿 12 個月後當主飲
+
+## 使用說明
+- 所有月齡建議以「足月、發展正常的嬰兒」為前提，特殊狀況請依個別醫囑。
+- 本資料為衛教參考，不取代醫師臨床判斷。
