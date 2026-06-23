@@ -22,6 +22,9 @@ GA_SNIPPET = ("""<!-- Google Analytics (GA4) -->
   gtag('config', '%s');
 </script>""" % (GA_ID, GA_ID)) if GA_ID else ""
 
+GSC_VERIFY = "DQIJMBwacydAwS3gSjbX_gf5CCTtkHqw6pbvA8HQOC0"  # Google Search Console 驗證碼（留空則不輸出）
+GSC_META = ('<meta name="google-site-verification" content="%s">' % GSC_VERIFY) if GSC_VERIFY else ""
+
 BRAND_MARK = ('<svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">'
     '<rect width="32" height="32" rx="8" fill="#3f8a62"/>'
     '<path d="M16 7c-3.2 0-5.6 2.3-5.6 5.4 0 2.1 1.2 3.7 2.9 5.2.9.8 1.4 1.4 1.4 2.6v3.1a1.3 1.3 0 0 0 2.6 0v-3.1c0-1.2.5-1.8 1.4-2.6 1.7-1.5 2.9-3.1 2.9-5.2C21.6 9.3 19.2 7 16 7z" fill="#eafff3"/>'
@@ -89,6 +92,7 @@ def render_food(food, sources_map):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{gsc}
 {ga}
 <title>{page_title}</title>
 <meta name="description" content="{desc}">
@@ -147,7 +151,7 @@ def render_food(food, sources_map):
 </body>
 </html>
 """.format(
-        ga=GA_SNIPPET, page_title=esc(page_title), desc=esc(desc), url=url, title=esc(title),
+        gsc=GSC_META, ga=GA_SNIPPET, page_title=esc(page_title), desc=esc(desc), url=url, title=esc(title),
         medpage=json.dumps(medpage, ensure_ascii=False, indent=2),
         faqpage=json.dumps(faqpage, ensure_ascii=False, indent=2),
         header=header("../", True), category=esc(food["category"]), name=esc(name),
@@ -182,6 +186,7 @@ def render_index(foods):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{gsc}
 {ga}
 <title>寶寶副食食材庫｜每種食材幾個月可以吃、過敏風險與處理方式</title>
 <meta name="description" content="嬰幼兒副食品食材資料庫。每種食材一頁，提供建議月齡、過敏風險、建議質地與處理方式，整理自 WHO 與台灣兒科醫學會等公開衛教指引。">
@@ -224,7 +229,7 @@ def render_index(foods):
 </script>
 </body>
 </html>
-""".format(ga=GA_SNIPPET, domain=DOMAIN, website=json.dumps(website, ensure_ascii=False, indent=2),
+""".format(gsc=GSC_META, ga=GA_SNIPPET, domain=DOMAIN, website=json.dumps(website, ensure_ascii=False, indent=2),
            header=header("", False), grid=grid, footer=FOOTER)
 
     out = os.path.join(ROOT, "index.html")
