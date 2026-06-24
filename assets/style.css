@@ -167,3 +167,16 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-
 .prose p, .prose li { color: #3a443e; line-height: 1.75; }
 .prose ul { padding-left: 20px; margin: 8px 0; }
 .prose li { margin: 6px 0; }
+
+/* Homepage CTA + month-age tool */
+.cta { display: inline-block; background: var(--green); color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 600; margin: 0 0 8px; }
+.cta:hover { background: var(--green-deep); text-decoration: none; }
+.month-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 24px; }
+.month-btn { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); cursor: pointer; font-size: 15px; font-family: inherit; }
+.month-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+.tool-h { font-size: 18px; font-weight: 600; margin: 22px 0 10px; }
+.chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.chip { display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; color: var(--ink); }
+.chip:hover { border-color: var(--green); text-decoration: none; }
+.chip .ce { font-size: 20px; }
+.chip .cn { font-weight: 600; font-size: 15px; flex: 1; }

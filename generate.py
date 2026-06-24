@@ -56,9 +56,10 @@ REF_LINKS_HTML = "參考來源（外部）：" + " · ".join(
 
 def footer(asset_prefix):
     return ('<footer><div class="wrap">\n'
-            '  <span>© 2026 寶寶副食食材庫 · <a href="%sabout.html">關於與編輯方針</a></span>\n'
+            '  <span>© 2026 寶寶副食食材庫 · <a href="%sabout.html">關於與編輯方針</a>'
+            ' · <a href="%stool.html">月齡對照工具</a></span>\n'
             '  <span>資料整理自 WHO、AAP、CDC 與台灣兒科醫學會等公開衛教指引</span>\n'
-            '</div></footer>' % asset_prefix)
+            '</div></footer>' % (asset_prefix, asset_prefix))
 
 
 def render_food(food, sources_map, slug_map):
@@ -292,6 +293,8 @@ def render_index(foods):
 
   <p class="intro">寶寶滿 6 個月開始添加副食品，但每種食材的「建議月齡、過敏風險、要不要加熱、怎麼處理」都不一樣。這裡整理常見的嬰幼兒副食品食材——從酪梨、地瓜、香蕉到雞蛋、花生，以及蜂蜜、牛奶等要特別注意的食材，每種一頁、答案放最前面，一查就懂。</p>
 
+  <a class="cta" href="tool.html">🔎 我的寶寶幾個月能吃什麼？查月齡對照工具 →</a>
+
   <div class="search"><input id="q" type="search" placeholder="搜尋食材，例如：酪梨、雞蛋、蜂蜜…" aria-label="搜尋食材"></div>
 
 {sections}
@@ -402,9 +405,104 @@ def render_about():
     return out
 
 
+def min_month(food):
+    return food.get("min_month", 12 if food["category"] == "特別注意" else 6)
+
+
+def render_tool(foods):
+    data = [{"slug": f["slug"], "name": f["name_zh"], "emoji": f["emoji"],
+             "min": min_month(f), "tag": f["card_tag"], "tagClass": f["card_tag_class"]}
+            for f in foods]
+    webapp = {"@context": "https://schema.org", "@type": "WebApplication",
+              "name": "寶寶月齡副食品對照工具", "url": DOMAIN + "/tool.html",
+              "applicationCategory": "HealthApplication", "operatingSystem": "Web",
+              "inLanguage": "zh-Hant-TW",
+              "offers": {"@type": "Offer", "price": "0", "priceCurrency": "TWD"}}
+    html = """<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{gsc}
+{ga}
+<title>寶寶幾個月可以吃什麼？月齡副食品對照工具｜寶寶副食食材庫</title>
+<meta name="description" content="選擇寶寶月齡，立即查看現在可以開始吃哪些副食品、哪些要再等。涵蓋常見食材的建議月齡與安全提醒，依據 WHO、AAP 等公開衛教指引。">
+<link rel="canonical" href="{domain}/tool.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="寶寶幾個月可以吃什麼？月齡副食品對照工具">
+<meta property="og:description" content="選擇寶寶月齡，立即查看現在能吃哪些副食品、哪些要再等。">
+<meta property="og:image" content="{og_image}">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{webapp}
+</script>
+</head>
+<body>
+
+{header}
+
+<main><div class="wrap">
+  <div class="crumb">食材庫 › 月齡對照工具</div>
+  <h1>我的寶寶幾個月，可以吃什麼？</h1>
+  <p class="intro">選擇寶寶的月齡，馬上看到現在可以開始嘗試的副食品，以及還需要再等的食材。所有建議以足月、發展正常的嬰兒為前提，特殊狀況請依醫囑。</p>
+
+  <div class="month-bar" id="monthBar"></div>
+
+  <h2 class="tool-h">這個月齡可以開始吃</h2>
+  <div class="chips" id="okGrid"></div>
+
+  <h2 class="tool-h" id="waitHead">還要再等</h2>
+  <div class="chips" id="waitGrid"></div>
+
+  <p class="sources" style="margin-top:24px">提醒：高致敏食材（如蛋、花生、魚）建議自 6 個月起及早、少量引入並觀察；標示「需切碎防嗆」的食材務必依各頁說明處理。本工具為衛教參考，不取代醫師對個別嬰兒的判斷。</p>
+</div></main>
+
+{footer}
+
+<script>
+  const FOODS = {data};
+  const MONTHS = [6,7,8,9,10,11,12];
+  let sel = 6;
+  const bar = document.getElementById('monthBar');
+  const okGrid = document.getElementById('okGrid');
+  const waitGrid = document.getElementById('waitGrid');
+  const waitHead = document.getElementById('waitHead');
+  function chip(f) {{
+    return '<a class="chip" href="foods/' + f.slug + '.html"><span class="ce">' + f.emoji +
+      '</span><span class="cn">' + f.name + '</span>' +
+      '<span class="tag-' + f.tagClass + '" style="margin-top:0">' + f.tag + '</span></a>';
+  }}
+  function render() {{
+    const ok = FOODS.filter(f => f.min <= sel);
+    const wait = FOODS.filter(f => f.min > sel);
+    okGrid.innerHTML = ok.map(chip).join('');
+    waitGrid.innerHTML = wait.map(chip).join('');
+    const show = wait.length > 0;
+    waitHead.style.display = show ? '' : 'none';
+    waitGrid.style.display = show ? '' : 'none';
+    [...bar.children].forEach(b => b.classList.toggle('active', +b.dataset.m === sel));
+  }}
+  bar.innerHTML = MONTHS.map(m => '<button class="month-btn" data-m="' + m + '">' + (m === 12 ? '12 個月+' : m + ' 個月') + '</button>').join('');
+  bar.addEventListener('click', e => {{ if (e.target.dataset.m) {{ sel = +e.target.dataset.m; render(); }} }});
+  render();
+</script>
+</body>
+</html>
+""".format(gsc=GSC_META, ga=GA_SNIPPET, domain=DOMAIN,
+           og_image=DOMAIN + "/assets/og-image.svg",
+           webapp=json.dumps(webapp, ensure_ascii=False, indent=2),
+           header=header("", True), data=json.dumps(data, ensure_ascii=False), footer=footer(""))
+    out = os.path.join(ROOT, "tool.html")
+    with open(out, "w", encoding="utf-8") as f:
+        f.write(html)
+    return out
+
+
 def render_sitemap(foods):
     rows = ['  <url><loc>%s/</loc><lastmod>%s</lastmod><priority>1.0</priority></url>' % (DOMAIN, TODAY)]
     rows.append('  <url><loc>%s/about.html</loc><lastmod>%s</lastmod><priority>0.5</priority></url>' % (DOMAIN, TODAY))
+    rows.append('  <url><loc>%s/tool.html</loc><lastmod>%s</lastmod><priority>0.7</priority></url>' % (DOMAIN, TODAY))
     for fd in foods:
         rows.append('  <url><loc>%s/foods/%s.html</loc><lastmod>%s</lastmod><priority>0.8</priority></url>'
                     % (DOMAIN, fd["slug"], TODAY))
@@ -423,7 +521,9 @@ def render_llms(foods):
              "## 食材頁面"]
     for fd in foods:
         lines.append("- [%s %s](/foods/%s.html): %s" % (fd["name_zh"], fd["name_en"], fd["slug"], fd["card_meta"]))
-    lines += ["", "## 使用說明",
+    lines += ["", "## 互動工具",
+              "- [月齡副食品對照工具](/tool.html): 選擇寶寶月齡，查看現在可以開始吃哪些食材、哪些要再等。",
+              "", "## 使用說明",
               "- 所有月齡建議以「足月、發展正常的嬰兒」為前提，特殊狀況請依個別醫囑。",
               "- 本資料為衛教參考，不取代醫師臨床判斷。", ""]
     out = os.path.join(ROOT, "llms.txt")
@@ -443,6 +543,7 @@ def main():
         render_food(fd, sources_map, slug_map)
     render_index(foods)
     render_about()
+    render_tool(foods)
     render_sitemap(foods)
     render_llms(foods)
     print("Generated %d food pages + index + sitemap + llms.txt" % len(foods))

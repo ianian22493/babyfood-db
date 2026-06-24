@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="DQIJMBwacydAwS3gSjbX_gf5CCTtkHqw6pbvA8HQOC0">
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ET2EWNN5ZC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ET2EWNN5ZC');
+</script>
+<title>寶寶幾個月可以吃什麼？月齡副食品對照工具｜寶寶副食食材庫</title>
+<meta name="description" content="選擇寶寶月齡，立即查看現在可以開始吃哪些副食品、哪些要再等。涵蓋常見食材的建議月齡與安全提醒，依據 WHO、AAP 等公開衛教指引。">
+<link rel="canonical" href="https://ianian22493.github.io/babyfood-db/tool.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="寶寶幾個月可以吃什麼？月齡副食品對照工具">
+<meta property="og:description" content="選擇寶寶月齡，立即查看現在能吃哪些副食品、哪些要再等。">
+<meta property="og:image" content="https://ianian22493.github.io/babyfood-db/assets/og-image.svg">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "寶寶月齡副食品對照工具",
+  "url": "https://ianian22493.github.io/babyfood-db/tool.html",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "zh-Hant-TW",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "TWD"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="site-header"><div class="wrap">
+  <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#3f8a62"/><path d="M16 7c-3.2 0-5.6 2.3-5.6 5.4 0 2.1 1.2 3.7 2.9 5.2.9.8 1.4 1.4 1.4 2.6v3.1a1.3 1.3 0 0 0 2.6 0v-3.1c0-1.2.5-1.8 1.4-2.6 1.7-1.5 2.9-3.1 2.9-5.2C21.6 9.3 19.2 7 16 7z" fill="#eafff3"/><circle cx="16" cy="12.4" r="2.2" fill="#3f8a62"/></svg>
+  <div class="brand-text"><b>寶寶副食食材庫</b><span>Baby First Foods · 依據 WHO 等公開衛教指引整理</span></div>
+  <nav><a href="index.html">← 回食材庫</a></nav>
+</div></header>
+
+<main><div class="wrap">
+  <div class="crumb">食材庫 › 月齡對照工具</div>
+  <h1>我的寶寶幾個月，可以吃什麼？</h1>
+  <p class="intro">選擇寶寶的月齡，馬上看到現在可以開始嘗試的副食品，以及還需要再等的食材。所有建議以足月、發展正常的嬰兒為前提，特殊狀況請依醫囑。</p>
+
+  <div class="month-bar" id="monthBar"></div>
+
+  <h2 class="tool-h">這個月齡可以開始吃</h2>
+  <div class="chips" id="okGrid"></div>
+
+  <h2 class="tool-h" id="waitHead">還要再等</h2>
+  <div class="chips" id="waitGrid"></div>
+
+  <p class="sources" style="margin-top:24px">提醒：高致敏食材（如蛋、花生、魚）建議自 6 個月起及早、少量引入並觀察；標示「需切碎防嗆」的食材務必依各頁說明處理。本工具為衛教參考，不取代醫師對個別嬰兒的判斷。</p>
+</div></main>
+
+<footer><div class="wrap">
+  <span>© 2026 寶寶副食食材庫 · <a href="about.html">關於與編輯方針</a> · <a href="tool.html">月齡對照工具</a></span>
+  <span>資料整理自 WHO、AAP、CDC 與台灣兒科醫學會等公開衛教指引</span>
+</div></footer>
+
+<script>
+  const FOODS = [{"slug": "avocado", "name": "酪梨", "emoji": "🥑", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "banana", "name": "香蕉", "emoji": "🍌", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "apple", "name": "蘋果", "emoji": "🍎", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "pear", "name": "梨子", "emoji": "🍐", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "papaya", "name": "木瓜", "emoji": "🟠", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "grape", "name": "葡萄", "emoji": "🍇", "min": 6, "tag": "需切碎防嗆", "tagClass": "warn"}, {"slug": "sweet-potato", "name": "地瓜", "emoji": "🍠", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "pumpkin", "name": "南瓜", "emoji": "🎃", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "carrot", "name": "紅蘿蔔", "emoji": "🥕", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "potato", "name": "馬鈴薯", "emoji": "🥔", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "broccoli", "name": "綠花椰菜", "emoji": "🥦", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "peas", "name": "豌豆", "emoji": "🟢", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "rice-cereal", "name": "嬰兒米精", "emoji": "🍚", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "oat", "name": "燕麥", "emoji": "🌾", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "egg", "name": "雞蛋", "emoji": "🥚", "min": 6, "tag": "高致敏 · 及早引入", "tagClass": "allergen"}, {"slug": "tofu", "name": "豆腐", "emoji": "⬜", "min": 6, "tag": "致敏原 · 先少量", "tagClass": "allergen"}, {"slug": "chicken", "name": "雞肉", "emoji": "🍗", "min": 6, "tag": "過敏風險低", "tagClass": "low"}, {"slug": "salmon", "name": "鮭魚", "emoji": "🐟", "min": 6, "tag": "致敏原 · 去刺低汞", "tagClass": "allergen"}, {"slug": "peanut", "name": "花生", "emoji": "🥜", "min": 6, "tag": "高致敏 · 需稀釋", "tagClass": "allergen"}, {"slug": "honey", "name": "蜂蜜", "emoji": "🍯", "min": 12, "tag": "1 歲後才可", "tagClass": "warn"}, {"slug": "cow-milk", "name": "牛奶", "emoji": "🥛", "min": 12, "tag": "1 歲後當主飲", "tagClass": "warn"}];
+  const MONTHS = [6,7,8,9,10,11,12];
+  let sel = 6;
+  const bar = document.getElementById('monthBar');
+  const okGrid = document.getElementById('okGrid');
+  const waitGrid = document.getElementById('waitGrid');
+  const waitHead = document.getElementById('waitHead');
+  function chip(f) {
+    return '<a class="chip" href="foods/' + f.slug + '.html"><span class="ce">' + f.emoji +
+      '</span><span class="cn">' + f.name + '</span>' +
+      '<span class="tag-' + f.tagClass + '" style="margin-top:0">' + f.tag + '</span></a>';
+  }
+  function render() {
+    const ok = FOODS.filter(f => f.min <= sel);
+    const wait = FOODS.filter(f => f.min > sel);
+    okGrid.innerHTML = ok.map(chip).join('');
+    waitGrid.innerHTML = wait.map(chip).join('');
+    const show = wait.length > 0;
+    waitHead.style.display = show ? '' : 'none';
+    waitGrid.style.display = show ? '' : 'none';
+    [...bar.children].forEach(b => b.classList.toggle('active', +b.dataset.m === sel));
+  }
+  bar.innerHTML = MONTHS.map(m => '<button class="month-btn" data-m="' + m + '">' + (m === 12 ? '12 個月+' : m + ' 個月') + '</button>').join('');
+  bar.addEventListener('click', e => { if (e.target.dataset.m) { sel = +e.target.dataset.m; render(); } });
+  render();
+</script>
+</body>
+</html>
