@@ -43,10 +43,22 @@ def header(asset_prefix, show_back):
             + nav + '\n</div></header>')
 
 
-FOOTER = ('<footer><div class="wrap">\n'
-          '  <span>© 2026 寶寶副食食材庫</span>\n'
-          '  <span>資料整理自 WHO 與台灣兒科醫學會等公開衛教指引</span>\n'
-          '</div></footer>')
+REFERENCES = [
+    ("WHO 嬰幼兒餵食", "https://www.who.int/news-room/fact-sheets/detail/infant-and-young-child-feeding"),
+    ("AAP HealthyChildren", "https://www.healthychildren.org/English/ages-stages/baby/feeding-nutrition/Pages/default.aspx"),
+    ("CDC 嬰幼兒營養", "https://www.cdc.gov/infant-toddler-nutrition/"),
+    ("台灣兒科醫學會", "https://www.pediatr.org.tw/"),
+]
+
+REF_LINKS_HTML = "參考來源（外部）：" + " · ".join(
+    '<a href="%s" target="_blank" rel="noopener">%s</a>' % (u, esc(label)) for label, u in REFERENCES)
+
+
+def footer(asset_prefix):
+    return ('<footer><div class="wrap">\n'
+            '  <span>© 2026 寶寶副食食材庫 · <a href="%sabout.html">關於與編輯方針</a></span>\n'
+            '  <span>資料整理自 WHO、AAP、CDC 與台灣兒科醫學會等公開衛教指引</span>\n'
+            '</div></footer>' % asset_prefix)
 
 
 def render_food(food, sources_map, slug_map):
@@ -182,7 +194,10 @@ def render_food(food, sources_map, slug_map):
 {faq}
   </section>
 
-{related}  <p class="sources">{sources}</p>
+{related}  <div class="refs">
+    <p class="sources">{sources}</p>
+    <p class="ref-links">{reflinks}</p>
+  </div>
 </div></main>
 
 {footer}
@@ -197,7 +212,8 @@ def render_food(food, sources_map, slug_map):
         header=header("../", True), category=esc(food["category"]), name=esc(name),
         today=TODAY, answer=esc(food["answer"]), safety=safety_html, facts=facts_html,
         prep_heading=esc(food["prep_heading"]), prep=prep_html,
-        nutrition=esc(food["nutrition"]), faq=faq_html, related=related_html, sources=esc(sources), footer=FOOTER)
+        nutrition=esc(food["nutrition"]), faq=faq_html, related=related_html, sources=esc(sources),
+        reflinks=REF_LINKS_HTML, footer=footer("../"))
 
     out = os.path.join(ROOT, "foods", slug + ".html")
     with open(out, "w", encoding="utf-8") as f:
@@ -308,7 +324,7 @@ def render_index(foods):
            website=json.dumps(website, ensure_ascii=False, indent=2),
            itemlist=json.dumps(itemlist, ensure_ascii=False, indent=2),
            og_image=DOMAIN + "/assets/og-image.svg",
-           header=header("", False), sections=sections, footer=FOOTER)
+           header=header("", False), sections=sections, footer=footer(""))
 
     out = os.path.join(ROOT, "index.html")
     with open(out, "w", encoding="utf-8") as f:
@@ -316,8 +332,79 @@ def render_index(foods):
     return out
 
 
+def render_about():
+    aboutpage = {"@context": "https://schema.org", "@type": "AboutPage",
+                 "name": "關於本站與編輯方針", "url": DOMAIN + "/about.html", "inLanguage": "zh-Hant-TW"}
+    refs = "\n".join('      <li><a href="%s" target="_blank" rel="noopener">%s</a></li>' % (u, esc(label))
+                     for label, u in REFERENCES)
+    html = """<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{gsc}
+{ga}
+<title>關於本站與編輯方針｜寶寶副食食材庫</title>
+<meta name="description" content="寶寶副食食材庫的內容來源、編輯與更新方針，以及醫療免責聲明。內容依據 WHO、AAP、CDC 與台灣兒科醫學會等公開衛教指引整理。">
+<link rel="canonical" href="{domain}/about.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="關於本站與編輯方針">
+<meta property="og:description" content="內容來源、編輯方針與醫療免責聲明。">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{aboutpage}
+</script>
+</head>
+<body>
+
+{header}
+
+<main><div class="wrap">
+  <div class="crumb">食材庫 › 關於與編輯方針</div>
+  <h1>關於本站與編輯方針</h1>
+
+  <section class="prose">
+    <h2>我們是什麼</h2>
+    <p>寶寶副食食材庫是一個整理「嬰幼兒副食品食材」的資料庫，每種食材一頁，提供建議月齡、過敏風險、建議質地、處理方式與常見問題，協助照顧者快速查到實用、可信的資訊。</p>
+
+    <h2>內容來源</h2>
+    <p>本站內容依據下列公開衛教指引整理，並持續對照更新：</p>
+    <ul>
+{refs}
+    </ul>
+
+    <h2>編輯與更新方針</h2>
+    <ul>
+      <li>每個食材頁的「一句話結論」置於最前，方便快速判讀。</li>
+      <li>關鍵建議（建議月齡、過敏風險、嗆噎與安全處理）以上述公開指引為準。</li>
+      <li>營養與熱量數值為概估，僅供參考；精確值請查詢 USDA 或衛福部食藥署食品營養成分資料庫。</li>
+      <li>內容會定期檢視，頁面標示「資料更新」日期。</li>
+    </ul>
+
+    <h2>醫療免責聲明</h2>
+    <p>本站為一般衛教參考，<strong>不構成醫療診斷或個別醫囑，也不取代醫師對個別嬰兒的臨床判斷</strong>。每個寶寶的發展與健康狀況不同，添加副食品、過敏或特殊疾病相關問題，請諮詢您的兒科醫師。</p>
+
+    <h2>勘誤與回饋</h2>
+    <p>若發現內容有誤或需要補充，歡迎回報，我們會盡快查證並更新。</p>
+  </section>
+</div></main>
+
+{footer}
+</body>
+</html>
+""".format(gsc=GSC_META, ga=GA_SNIPPET, domain=DOMAIN,
+           aboutpage=json.dumps(aboutpage, ensure_ascii=False, indent=2),
+           header=header("", True), refs=refs, footer=footer(""))
+    out = os.path.join(ROOT, "about.html")
+    with open(out, "w", encoding="utf-8") as f:
+        f.write(html)
+    return out
+
+
 def render_sitemap(foods):
     rows = ['  <url><loc>%s/</loc><lastmod>%s</lastmod><priority>1.0</priority></url>' % (DOMAIN, TODAY)]
+    rows.append('  <url><loc>%s/about.html</loc><lastmod>%s</lastmod><priority>0.5</priority></url>' % (DOMAIN, TODAY))
     for fd in foods:
         rows.append('  <url><loc>%s/foods/%s.html</loc><lastmod>%s</lastmod><priority>0.8</priority></url>'
                     % (DOMAIN, fd["slug"], TODAY))
@@ -355,6 +442,7 @@ def main():
     for fd in foods:
         render_food(fd, sources_map, slug_map)
     render_index(foods)
+    render_about()
     render_sitemap(foods)
     render_llms(foods)
     print("Generated %d food pages + index + sitemap + llms.txt" % len(foods))

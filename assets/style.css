@@ -158,3 +158,12 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-
 .about { margin: 40px 0 0; padding-top: 22px; border-top: 1px solid var(--line); }
 .about h2 { font-size: 18px; font-weight: 600; margin: 0 0 10px; }
 .about p { color: var(--muted); font-size: 15px; margin: 0 0 10px; }
+
+/* Source links + editorial (about) page */
+.refs { margin-top: 16px; }
+.ref-links { font-size: 13px; color: var(--muted); margin: 6px 0 0; }
+.ref-links a { color: var(--green); }
+.prose h2 { font-size: 18px; font-weight: 600; margin: 26px 0 8px; }
+.prose p, .prose li { color: #3a443e; line-height: 1.75; }
+.prose ul { padding-left: 20px; margin: 8px 0; }
+.prose li { margin: 6px 0; }
