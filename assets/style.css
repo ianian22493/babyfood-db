@@ -101,6 +101,19 @@ section > h2 { font-size: 20px; margin: 0 0 10px; font-weight: 600; }
 .faq-item .q { font-weight: 600; margin: 0 0 4px; }
 .faq-item .a { margin: 0; color: #45504a; }
 
+/* Related foods */
+.related-section { margin: 0 0 28px; }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 10px; }
+.related-card {
+  display: flex; flex-direction: column; gap: 4px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 14px 12px; color: var(--ink); text-decoration: none;
+}
+.related-card:hover { border-color: var(--green); text-decoration: none; }
+.re-emoji { font-size: 26px; }
+.re-name { font-weight: 600; font-size: 16px; }
+.re-meta { font-size: 12px; color: var(--muted); }
+
 /* Sources */
 .sources { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
 .sources a { color: var(--green); }

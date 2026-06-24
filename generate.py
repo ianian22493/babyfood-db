@@ -49,7 +49,7 @@ FOOTER = ('<footer><div class="wrap">\n'
           '</div></footer>')
 
 
-def render_food(food, sources_map):
+def render_food(food, sources_map, slug_map):
     slug = food["slug"]
     name = food["name_zh"]
     title = "寶寶幾個月可以吃%s？" % name
@@ -73,6 +73,26 @@ def render_food(food, sources_map):
         for q, a in food["faq"])
 
     sources = sources_map[food.get("sources_key", "default_sources")]
+
+    related_html = ""
+    if food.get("related"):
+        cards = []
+        for rel_slug in food["related"]:
+            rel = slug_map.get(rel_slug)
+            if rel:
+                cards.append(
+                    '<a class="related-card" href="%s.html">'
+                    '<span class="re-emoji">%s</span>'
+                    '<span class="re-name">%s</span>'
+                    '<span class="re-meta">%s</span></a>'
+                    % (rel["slug"], rel["emoji"], esc(rel["name_zh"]), esc(rel["card_meta"])))
+        if cards:
+            related_html = (
+                '\n  <section class="related-section">\n'
+                '    <h2>其他食材</h2>\n'
+                '    <div class="related-grid">\n'
+                + "".join("      " + c + "\n" for c in cards)
+                + '    </div>\n  </section>\n')
 
     medpage = {
         "@context": "https://schema.org", "@type": "MedicalWebPage",
@@ -162,7 +182,7 @@ def render_food(food, sources_map):
 {faq}
   </section>
 
-  <p class="sources">{sources}</p>
+{related}  <p class="sources">{sources}</p>
 </div></main>
 
 {footer}
@@ -177,7 +197,7 @@ def render_food(food, sources_map):
         header=header("../", True), category=esc(food["category"]), name=esc(name),
         today=TODAY, answer=esc(food["answer"]), safety=safety_html, facts=facts_html,
         prep_heading=esc(food["prep_heading"]), prep=prep_html,
-        nutrition=esc(food["nutrition"]), faq=faq_html, sources=esc(sources), footer=FOOTER)
+        nutrition=esc(food["nutrition"]), faq=faq_html, related=related_html, sources=esc(sources), footer=FOOTER)
 
     out = os.path.join(ROOT, "foods", slug + ".html")
     with open(out, "w", encoding="utf-8") as f:
@@ -301,9 +321,10 @@ def main():
         data = json.load(f)
     foods = data["foods"]
     sources_map = {"default_sources": data["default_sources"], "allergen_sources": data["allergen_sources"]}
+    slug_map = {fd["slug"]: fd for fd in foods}
     os.makedirs(os.path.join(ROOT, "foods"), exist_ok=True)
     for fd in foods:
-        render_food(fd, sources_map)
+        render_food(fd, sources_map, slug_map)
     render_index(foods)
     render_sitemap(foods)
     render_llms(foods)
