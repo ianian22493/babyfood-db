@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#f0faf4"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#3f8a62"/>
+  <rect x="0" y="622" width="1200" height="8" fill="#3f8a62"/>
+
+  <!-- Logo mark -->
+  <rect x="480" y="140" width="80" height="80" rx="20" fill="#3f8a62"/>
+  <path d="M520 152c-8 0-14 5.75-14 13.5 0 5.25 3 9.25 7.25 13 2.25 2 3.5 3.5 3.5 6.5v7.75a3.25 3.25 0 0 0 6.5 0v-7.75c0-3 1.25-4.5 3.5-6.5 4.25-3.75 7.25-7.75 7.25-13C534 157.75 528 152 520 152z" fill="#eafff3"/>
+  <circle cx="520" cy="165.5" r="5.5" fill="#3f8a62"/>
+
+  <!-- Site title -->
+  <text x="600" y="178" font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif" font-size="52" font-weight="700" fill="#1a4731" text-anchor="middle">寶寶副食食材庫</text>
+  <text x="600" y="236" font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif" font-size="28" fill="#3f8a62" text-anchor="middle">Baby First Foods</text>
+
+  <!-- Divider -->
+  <rect x="460" y="268" width="280" height="3" rx="2" fill="#3f8a62" opacity="0.3"/>
+
+  <!-- Tagline -->
+  <text x="600" y="330" font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif" font-size="30" fill="#2d6a4f" text-anchor="middle">每種食材幾個月可以吃</text>
+  <text x="600" y="375" font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif" font-size="30" fill="#2d6a4f" text-anchor="middle">過敏風險與處理方式一查就懂</text>
+
+  <!-- Food emojis row -->
+  <text x="230" y="480" font-size="64" text-anchor="middle">🥑</text>
+  <text x="350" y="480" font-size="64" text-anchor="middle">🥚</text>
+  <text x="470" y="480" font-size="64" text-anchor="middle">🍠</text>
+  <text x="600" y="480" font-size="64" text-anchor="middle">🐟</text>
+  <text x="730" y="480" font-size="64" text-anchor="middle">🥜</text>
+  <text x="850" y="480" font-size="64" text-anchor="middle">🍌</text>
+  <text x="970" y="480" font-size="64" text-anchor="middle">🥦</text>
+
+  <!-- Source label -->
+  <text x="600" y="575" font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif" font-size="20" fill="#6b9e85" text-anchor="middle">依據 WHO 與台灣兒科醫學會等公開衛教指引整理</text>
+</svg>

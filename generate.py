@@ -86,6 +86,13 @@ def render_food(food, sources_map):
     faqpage = {"@context": "https://schema.org", "@type": "FAQPage",
                "mainEntity": [{"@type": "Question", "name": q,
                                "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in food["faq"]]}
+    breadcrumb = {
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "食材庫", "item": DOMAIN + "/"},
+            {"@type": "ListItem", "position": 2, "name": food["category"]},
+            {"@type": "ListItem", "position": 3, "name": name}
+        ]}
 
     html = """<!DOCTYPE html>
 <html lang="zh-Hant-TW">
@@ -101,12 +108,23 @@ def render_food(food, sources_map):
 <meta property="og:type" content="article">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
+<meta property="og:url" content="{url}">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="寶寶副食食材庫">
+<meta property="og:image" content="{og_image}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{og_image}">
 <link rel="stylesheet" href="../assets/style.css">
 <script type="application/ld+json">
 {medpage}
 </script>
 <script type="application/ld+json">
 {faqpage}
+</script>
+<script type="application/ld+json">
+{breadcrumb}
 </script>
 </head>
 <body>
@@ -152,8 +170,10 @@ def render_food(food, sources_map):
 </html>
 """.format(
         gsc=GSC_META, ga=GA_SNIPPET, page_title=esc(page_title), desc=esc(desc), url=url, title=esc(title),
+        og_image=DOMAIN + "/assets/og-image.svg",
         medpage=json.dumps(medpage, ensure_ascii=False, indent=2),
         faqpage=json.dumps(faqpage, ensure_ascii=False, indent=2),
+        breadcrumb=json.dumps(breadcrumb, ensure_ascii=False, indent=2),
         header=header("../", True), category=esc(food["category"]), name=esc(name),
         today=TODAY, answer=esc(food["answer"]), safety=safety_html, facts=facts_html,
         prep_heading=esc(food["prep_heading"]), prep=prep_html,
@@ -195,6 +215,14 @@ def render_index(foods):
 <meta property="og:type" content="website">
 <meta property="og:title" content="寶寶副食食材庫">
 <meta property="og:description" content="每種副食品食材幾個月可以吃、過敏風險與處理方式，整理自 WHO 等公開衛教指引。">
+<meta property="og:url" content="{domain}/">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="寶寶副食食材庫">
+<meta property="og:image" content="{og_image}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="寶寶副食食材庫">
+<meta name="twitter:description" content="每種副食品食材幾個月可以吃、過敏風險與處理方式，整理自 WHO 等公開衛教指引。">
+<meta name="twitter:image" content="{og_image}">
 <link rel="stylesheet" href="assets/style.css">
 <script type="application/ld+json">
 {website}
@@ -230,6 +258,7 @@ def render_index(foods):
 </body>
 </html>
 """.format(gsc=GSC_META, ga=GA_SNIPPET, domain=DOMAIN, website=json.dumps(website, ensure_ascii=False, indent=2),
+           og_image=DOMAIN + "/assets/og-image.svg",
            header=header("", False), grid=grid, footer=FOOTER)
 
     out = os.path.join(ROOT, "index.html")
