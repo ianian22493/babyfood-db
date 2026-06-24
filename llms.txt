@@ -24,6 +24,21 @@
 - [花生 Peanut](/foods/peanut.html): 6 個月起 · 稀釋花生醬
 - [蜂蜜 Honey](/foods/honey.html): 滿 12 個月後才可
 - [牛奶 Cow's milk](/foods/cow-milk.html): 滿 12 個月後當主飲
+- [奇異果 Kiwi](/foods/kiwi.html): 6 個月起 · 熟果壓泥
+- [草莓 Strawberry](/foods/strawberry.html): 6 個月起 · 壓泥或切碎
+- [藍莓 Blueberry](/foods/blueberry.html): 6 個月起 · 壓扁或切半
+- [西瓜 Watermelon](/foods/watermelon.html): 6 個月起 · 去籽切小
+- [番茄 Tomato](/foods/tomato.html): 6 個月起 · 去皮去籽
+- [玉米 Corn](/foods/corn.html): 6 個月起 · 打泥或壓碎
+- [菠菜 Spinach](/foods/spinach.html): 6 個月起 · 煮熟切碎
+- [牛肉 Beef](/foods/beef.html): 6 個月起 · 補鐵首選
+- [豬肉 Pork](/foods/pork.html): 6 個月起 · 煮熟剁泥
+- [蝦 Shrimp](/foods/shrimp.html): 6 個月起 · 致敏+需切碎
+- [鮪魚 Tuna](/foods/tuna.html): 6 個月起 · 限量低汞
+- [優格 Yogurt](/foods/yogurt.html): 6 個月起 · 無糖原味
+- [起司 Cheese](/foods/cheese.html): 6 個月起 · 選低鈉
+- [麵包 Bread](/foods/bread.html): 6 個月起 · 致敏(小麥)
+- [麵條 Noodles](/foods/noodles.html): 6 個月起 · 煮軟切短
 
 ## 互動工具
 - [月齡副食品對照工具](/tool.html): 選擇寶寶月齡，查看現在可以開始吃哪些食材、哪些要再等。
