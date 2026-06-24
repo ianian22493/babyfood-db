@@ -150,3 +150,11 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-
   h1 { font-size: 24px; }
   .hero h1 { font-size: 26px; }
 }
+
+/* Homepage intro + category sections + about (merge addition) */
+.intro { color: #45504a; margin: 0 0 8px; }
+.cat-title { font-size: 20px; font-weight: 600; margin: 30px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.cat-sec:first-of-type .cat-title { margin-top: 14px; }
+.about { margin: 40px 0 0; padding-top: 22px; border-top: 1px solid var(--line); }
+.about h2 { font-size: 18px; font-weight: 600; margin: 0 0 10px; }
+.about p { color: var(--muted); font-size: 15px; margin: 0 0 10px; }

@@ -205,21 +205,34 @@ def render_food(food, sources_map, slug_map):
     return out
 
 
+CATEGORY_ORDER = ["水果類", "根莖類", "蔬菜類", "穀物類", "蛋白質類", "特別注意"]
+
+
 def render_index(foods):
-    cards = []
+    def card_html(fd):
+        return ('      <a class="food-card" href="foods/%s.html" data-name="%s %s">'
+                '<div class="emoji">%s</div><div class="name">%s</div>'
+                '<div class="meta">%s</div><div class="tag-%s">%s</div></a>'
+                % (fd["slug"], esc(fd["name_zh"]), esc(fd["name_en"]).lower(), fd["emoji"],
+                   esc(fd["name_zh"]), esc(fd["card_meta"]), fd["card_tag_class"], esc(fd["card_tag"])))
+
+    grouped = {}
     for fd in foods:
-        cards.append(
-            '    <a class="food-card" href="foods/%s.html" data-name="%s %s">'
-            '<div class="emoji">%s</div><div class="name">%s</div>'
-            '<div class="meta">%s</div><div class="tag-%s">%s</div></a>'
-            % (fd["slug"], esc(fd["name_zh"]), esc(fd["name_en"]).lower(), fd["emoji"],
-               esc(fd["name_zh"]), esc(fd["card_meta"]), fd["card_tag_class"], esc(fd["card_tag"])))
-    grid = "\n".join(cards)
+        grouped.setdefault(fd["category"], []).append(fd)
+    cats = [c for c in CATEGORY_ORDER if c in grouped] + [c for c in grouped if c not in CATEGORY_ORDER]
+    sections = "\n".join(
+        '  <section class="cat-sec">\n    <h2 class="cat-title">%s</h2>\n    <div class="grid">\n%s\n    </div>\n  </section>'
+        % (esc(c), "\n".join(card_html(fd) for fd in grouped[c])) for c in cats)
 
     website = {"@context": "https://schema.org", "@type": "WebSite",
                "name": "寶寶副食食材庫", "url": DOMAIN + "/",
                "description": "嬰幼兒副食品食材資料庫，提供每種食材的建議月齡、過敏風險與處理方式。",
                "inLanguage": "zh-Hant-TW"}
+    itemlist = {"@context": "https://schema.org", "@type": "ItemList",
+                "name": "嬰幼兒副食品食材清單",
+                "itemListElement": [{"@type": "ListItem", "position": i + 1,
+                                     "url": "%s/foods/%s.html" % (DOMAIN, fd["slug"]),
+                                     "name": fd["name_zh"]} for i, fd in enumerate(foods)]}
 
     html = """<!DOCTYPE html>
 <html lang="zh-Hant-TW">
@@ -247,6 +260,9 @@ def render_index(foods):
 <script type="application/ld+json">
 {website}
 </script>
+<script type="application/ld+json">
+{itemlist}
+</script>
 </head>
 <body>
 
@@ -258,11 +274,17 @@ def render_index(foods):
     <p>一種食材一頁：建議月齡、過敏風險、建議質地與處理方式，一查就懂。內容整理自 WHO 與台灣兒科醫學會等公開衛教指引。</p>
   </div>
 
+  <p class="intro">寶寶滿 6 個月開始添加副食品，但每種食材的「建議月齡、過敏風險、要不要加熱、怎麼處理」都不一樣。這裡整理常見的嬰幼兒副食品食材——從酪梨、地瓜、香蕉到雞蛋、花生，以及蜂蜜、牛奶等要特別注意的食材，每種一頁、答案放最前面，一查就懂。</p>
+
   <div class="search"><input id="q" type="search" placeholder="搜尋食材，例如：酪梨、雞蛋、蜂蜜…" aria-label="搜尋食材"></div>
 
-  <div class="grid" id="grid">
-{grid}
-  </div>
+{sections}
+
+  <section class="about">
+    <h2>關於寶寶副食食材庫</h2>
+    <p>本站整理嬰幼兒副食品常見食材的添加建議，內容依據世界衛生組織（WHO）、美國兒科醫學會（AAP）與台灣兒科醫學會等公開衛教指引。每個食材頁提供建議月齡、過敏風險分級、建議質地與處理方式，以及常見問題。</p>
+    <p>本站為衛教參考，不取代醫師對個別嬰兒的臨床判斷；如有特殊狀況請諮詢兒科醫師。</p>
+  </section>
 </div></main>
 
 {footer}
@@ -270,16 +292,23 @@ def render_index(foods):
 <script>
   const q = document.getElementById('q');
   const cards = [...document.querySelectorAll('.food-card')];
+  const secs = [...document.querySelectorAll('.cat-sec')];
   q.addEventListener('input', () => {{
     const v = q.value.trim().toLowerCase();
     cards.forEach(c => {{ c.style.display = c.dataset.name.toLowerCase().includes(v) ? '' : 'none'; }});
+    secs.forEach(s => {{
+      const any = [...s.querySelectorAll('.food-card')].some(c => c.style.display !== 'none');
+      s.style.display = any ? '' : 'none';
+    }});
   }});
 </script>
 </body>
 </html>
-""".format(gsc=GSC_META, ga=GA_SNIPPET, domain=DOMAIN, website=json.dumps(website, ensure_ascii=False, indent=2),
+""".format(gsc=GSC_META, ga=GA_SNIPPET, domain=DOMAIN,
+           website=json.dumps(website, ensure_ascii=False, indent=2),
+           itemlist=json.dumps(itemlist, ensure_ascii=False, indent=2),
            og_image=DOMAIN + "/assets/og-image.svg",
-           header=header("", False), grid=grid, footer=FOOTER)
+           header=header("", False), sections=sections, footer=FOOTER)
 
     out = os.path.join(ROOT, "index.html")
     with open(out, "w", encoding="utf-8") as f:
