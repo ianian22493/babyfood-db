@@ -55,7 +55,7 @@ def render_food(food, sources_map, slug_map):
     title = "寶寶幾個月可以吃%s？" % name
     page_title = "%s｜寶寶副食食材庫" % title
     url = "%s/foods/%s.html" % (DOMAIN, slug)
-    desc = food["answer"][:90]
+    desc = food["answer"] if len(food["answer"]) <= 160 else food["answer"][:157] + "…"
 
     facts_html = "\n".join(
         '    <div class="fact"><div class="k">%s</div><div class="v">%s</div></div>' % (esc(k), esc(v))
