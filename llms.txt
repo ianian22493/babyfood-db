@@ -39,6 +39,20 @@
 - [起司 Cheese](/foods/cheese.html): 6 個月起 · 選低鈉
 - [麵包 Bread](/foods/bread.html): 6 個月起 · 致敏(小麥)
 - [麵條 Noodles](/foods/noodles.html): 6 個月起 · 煮軟切短
+- [芒果 Mango](/foods/mango.html): 6 個月起 · 熟果壓泥
+- [桃子 Peach](/foods/peach.html): 6 個月起 · 熟果壓泥
+- [柳橙 Orange](/foods/orange.html): 6 個月起 · 去膜去籽
+- [哈密瓜 Cantaloupe](/foods/cantaloupe.html): 6 個月起 · 去籽切小
+- [白花椰菜 Cauliflower](/foods/cauliflower.html): 6 個月起 · 蒸軟
+- [四季豆 Green beans](/foods/green-beans.html): 6 個月起 · 煮軟切小段
+- [櫛瓜 Zucchini](/foods/zucchini.html): 6 個月起 · 蒸軟
+- [甜椒 Bell pepper](/foods/bell-pepper.html): 6 個月起 · 蒸軟去皮
+- [山藥 Yam](/foods/yam.html): 6 個月起 · 蒸熟壓泥
+- [白蘿蔔 Daikon](/foods/daikon.html): 6 個月起 · 煮軟
+- [鱈魚 Cod](/foods/cod.html): 6 個月起 · 低汞去刺
+- [毛豆 Edamame](/foods/edamame.html): 6 個月起 · 致敏+壓泥
+- [紅豆 Red bean](/foods/red-bean.html): 6 個月起 · 煮軟壓泥
+- [小米 Millet](/foods/millet.html): 6 個月起 · 煮成粥
 
 ## 互動工具
 - [月齡副食品對照工具](/tool.html): 選擇寶寶月齡，查看現在可以開始吃哪些食材、哪些要再等。
